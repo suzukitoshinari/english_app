@@ -1,6 +1,6 @@
 import React, { useState, useEffect }　from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import{ TextField, List, ListItem } from '@material-ui/core';
+import{ TextField, List, ListItem, Checkbox } from '@material-ui/core';
 
 const useStyles = makeStyles({
   root: {
@@ -48,8 +48,6 @@ const StickyTable = () => {
         [meanings, setMeaning] = useState([]),
         [newMeaning, setNewMeaning] = useState('');
 
-  // useEffect(() => {
-
         const handleNewWord = (e) => {
           setNewWord(e.target.value);
         }
@@ -96,12 +94,12 @@ const StickyTable = () => {
     setNewMeaning('');
   }
 
-  const handleDeleteWord = () => {
+  const handleDeleteWord = (id) => {
     // const id = words.length ? words[words.length - 1].id + 1 : 0;
     setWord(words.filter((word) => word.id != id));
   }
 
-  const handleDeleteMeaning = () => {
+  const handleDeleteMeaning = (id) => {
     setMeaning(meanings.filter((meaning) => meaning.id != id));
   }
 
@@ -110,7 +108,24 @@ const StickyTable = () => {
     handleDeleteMeaning();
   }
 
-// },[])
+  const toggleDeleteWord = (id) => {
+    setWord(words.filter(word => {
+        if (word.id === id) word.isCompleted = !word.isCompleted
+        return word
+    }))
+  }
+
+  const toggleDeleteMeaning = (id) => {
+    setMeaning(meanings.filter(meaning => {
+        if (meaning.id === id) meaning.isCompleted = !meaning.isCompleted
+        return meaning
+    }))
+  }
+
+  const toggleDelete = () => {
+    toggleDeleteWord();
+    toggleDeleteMeaning();
+  }
   // const [open, setOpen] = useState(false);
 
   // const handleOpen = () => {
@@ -138,7 +153,12 @@ const StickyTable = () => {
           <List component='ol' className={classes.list}>
             {words.map((word, id) => (
               <ListItem key={id} component='li' className={classes.item}>
-                <input type='checkbox'/>
+                <Checkbox
+                  color="primary"
+                  inputProps={{ 'aria-label': 'secondary checkbox' }}
+                  onChange={toggleDelete}
+                  // checked={word.isCompleted}
+                />
                 {word.item}
               </ListItem>
             ))}
@@ -158,6 +178,5 @@ const StickyTable = () => {
     </>
   );
 }
-
 
 export default StickyTable;
