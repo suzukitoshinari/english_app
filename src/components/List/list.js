@@ -1,4 +1,4 @@
-import React, { useState, useEffect }　from 'react';
+import React, { useState }　from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import{ TextField, List, ListItem, Checkbox } from '@material-ui/core';
 
@@ -114,7 +114,7 @@ const StickyTable = () => {
         return word
     }))
   }
-  
+
   const toggleDeleteMeaning = (id) => {
     setMeaning(meanings.filter(meaning => {
         if (meaning.id === id) meaning.isCompleted = !meaning.isCompleted
@@ -126,15 +126,6 @@ const StickyTable = () => {
     toggleDeleteWord();
     toggleDeleteMeaning();
   }
-  // const [open, setOpen] = useState(false);
-
-  // const handleOpen = () => {
-  //   setOpen(true);
-  // };
-
-  // const handleClose = () => {
-  //   setOpen(false);
-  // };
 
   return (
     <>
