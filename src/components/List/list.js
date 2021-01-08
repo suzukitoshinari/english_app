@@ -96,11 +96,11 @@ const StickyTable = () => {
 
   const handleDeleteWord = (id) => {
     // const id = words.length ? words[words.length - 1].id + 1 : 0;
-    setWord(words.filter((word) => word.id != id));
+    setWord(words.filter((word) => word.id !== id));
   }
 
   const handleDeleteMeaning = (id) => {
-    setMeaning(meanings.filter((meaning) => meaning.id != id));
+    setMeaning(meanings.filter((meaning) => meaning.id !== id));
   }
 
   const onClickDelete = () => {
@@ -109,22 +109,24 @@ const StickyTable = () => {
   }
 
   const toggleDeleteWord = (id) => {
-    setWord(words.filter(word => {
-        if (word.id === id) word.isCompleted = !word.isCompleted
+    setWord(words.map(word => {
+        if (word.id === id) {
+          return {...word, isCompleted: !word.isCompleted}
+        }
         return word
-    }))
+      }))
   }
 
-  const toggleDeleteMeaning = (id) => {
-    setMeaning(meanings.filter(meaning => {
-        if (meaning.id === id) meaning.isCompleted = !meaning.isCompleted
-        return meaning
-    }))
-  }
+  // const toggleDeleteMeaning = (id) => {
+  //   setMeaning(meanings.filter(meaning => {
+  //       if (meaning.id === id) meaning.isCompleted = !meaning.isCompleted
+  //       return meaning
+  //   }))
+  // }
 
-  const toggleDelete = () => {
-    toggleDeleteWord();
-    toggleDeleteMeaning();
+  const toggleDelete = (id) => {
+    toggleDeleteWord(id);
+    // toggleDeleteMeaning();
   }
 
   return (
@@ -147,8 +149,8 @@ const StickyTable = () => {
                 <Checkbox
                   color="primary"
                   inputProps={{ 'aria-label': 'secondary checkbox' }}
-                  onChange={toggleDelete}
-                  checked={word.isCompleted}
+                  onClick={toggleDelete}
+                  defaultChecked={word.isCompleted}
                 />
                 {word.item}
               </ListItem>
