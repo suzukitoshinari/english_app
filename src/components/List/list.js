@@ -104,18 +104,18 @@ const StickyTable = () => {
   }
 
   const onClickDelete = () => {
-      handleDeleteMeaning();
       handleDeleteWord();
+      handleDeleteMeaning();
   }
 
-  const toggleDeleteWord = (id) => {
-    setWord(words.map(word => {
-        if (word.id === id) {
-          return {...word, isCompleted: !word.isCompleted}
-        }
-        return word
-      }))
-  }
+  // const toggleDeleteWord = (id) => {
+  //   setWord(words.map(word => {
+  //       if (word.id === id) {
+  //         return {...word, isCompleted: !word.isCompleted}
+  //       }
+  //       return word
+  //     }))
+  // }
 
   // const toggleDeleteMeaning = (id) => {
   //   setMeaning(meanings.filter(meaning => {
@@ -124,10 +124,10 @@ const StickyTable = () => {
   //   }))
   // }
 
-  const toggleDelete = (id) => {
-    toggleDeleteWord(id);
-    // toggleDeleteMeaning();
-  }
+  // const toggleDelete = (id) => {
+  //   toggleDeleteWord(id);
+  //   // toggleDeleteMeaning();
+  // }
 
   return (
     <>
@@ -138,20 +138,23 @@ const StickyTable = () => {
           <button type="button" onClick={onClickAdd}>
             登録する
           </button>
-          <button onClick={onClickDelete}>
+          {/* <button onClick={onClickDelete}>
             削除
-          </button>
+          </button> */}
         </form>
         <div className={classes.container}>
           <List component='ol' className={classes.list}>
             {words.map((word, id) => (
               <ListItem key={id} component='li' className={classes.item}>
-                <Checkbox
+                {/* <Checkbox
                   color="primary"
                   inputProps={{ 'aria-label': 'secondary checkbox' }}
                   onClick={toggleDelete}
                   defaultChecked={word.isCompleted}
-                />
+                /> */}
+                <button onClick={() => onClickDelete(id)}>
+                  削除
+                </button>
                 {word.item}
               </ListItem>
             ))}
