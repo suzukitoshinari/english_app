@@ -152,7 +152,7 @@ const StickyTable = () => {
                   onClick={toggleDelete}
                   defaultChecked={word.isCompleted}
                 /> */}
-                <button onClick={() => onClickDelete(id)}>
+                <button onClick={() => onClickDelete()}>
                   削除
                 </button>
                 {word.item}
