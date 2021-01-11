@@ -41,18 +41,18 @@ function Home() {
   const classes = useStyles();
   return (
     <>
-      <Typography className={classes.text} variant="h1" component="h2">
+      <Typography className={classes.text} variant='h1' component='h2'>
         英語録
       </Typography> 
       <div className={classes.root}>
         <Grid container spacing={2} className={classes.gridContainer}>
           <Grid item xs={12} className={classes.btnContainer}>
-            <Button href='/word'　className={classes.btn} variant="contained" disableElevation>
+            <Button href='/word'　className={classes.btn} variant='contained' disableElevation>
               単語
             </Button>
           </Grid>             
           <Grid item xs={12} className={classes.btnContainer}>
-            <Button href='/phrase' className={classes.btn} variant="contained" disableElevation>
+            <Button href='/phrase' className={classes.btn} variant='contained' disableElevation>
               フレーズ
             </Button>
           </Grid>            

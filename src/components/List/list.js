@@ -132,10 +132,10 @@ const StickyTable = () => {
   return (
     <>
       <div className={classes.main}>
-        <form className={classes.paper} autoComplete="off">      
-          <TextField label="単語" value={newWord} onChange={handleNewWord}/>
-          <TextField label="意味" value={newMeaning} onChange={handleNewMeaning}/>
-          <button type="button" onClick={onClickAdd}>
+        <form className={classes.paper} autoComplete='off'>      
+          <TextField label='単語' value={newWord} onChange={handleNewWord}/>
+          <TextField label='意味' value={newMeaning} onChange={handleNewMeaning}/>
+          <button type='button' onClick={onClickAdd}>
             登録する
           </button>
           {/* <button onClick={onClickDelete}>

@@ -21,7 +21,7 @@ function Word() {
   const classes = useStyles();
   return (
     <>
-      <Typography className={classes.text} variant="h1" component="h2">
+      <Typography className={classes.text} variant='h1' component='h2'>
         単語帳
       </Typography>
       <Container className={classes.root}>
