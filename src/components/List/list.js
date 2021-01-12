@@ -48,35 +48,35 @@ const StickyTable = () => {
         [meanings, setMeaning] = useState([]),
         [newMeaning, setNewMeaning] = useState('');
 
-        const handleNewWord = (e) => {
-          setNewWord(e.target.value);
-        }
-        const handleNewMeaning = (e) => {
-          setNewMeaning(e.target.value);
-        };
+  const handleNewWord = (e) => {
+    setNewWord(e.target.value);
+  }
+  const handleNewMeaning = (e) => {
+    setNewMeaning(e.target.value);
+  };
 
-        const koko = () => {
-          if(words && newWord === '' || newMeaning === '') {
-            alert('単語と意味の両方を入力してください。');
-            setNewWord('');
-            setNewMeaning('');
-            return;
-          } else if(newWord.match(/[^A-Za-z0-9]+/)) {
-            alert('英語で入力してください。');
-            setNewWord('');
-            setNewMeaning('');
-            return;
-          }  else {
-            handleAddWord();
-            handleAddMeaning();
-          }
-        }
+  const koko = () => {
+    if(words && newWord === '' || newMeaning === '') {
+      alert('単語と意味の両方を入力してください。');
+      setNewWord('');
+      setNewMeaning('');
+      return;
+    } else if(newWord.match(/[^A-Za-z0-9]+/)) {
+      alert('英語で入力してください。');
+      setNewWord('');
+      setNewMeaning('');
+      return;
+    }  else {
+      handleAddWord();
+      handleAddMeaning();
+    }
+  }
 
-        const onClickAdd = () => {
-        　koko();
-        }
+  const onClickAdd = () => {
+  　koko();
+  }
 
-   const handleAddWord = () => {
+  const handleAddWord = () => {
     // e.preventDefault()
     // const id = words.length ? words[words.length - 1].id + 1 : 0;
     setWord([...words, {
@@ -108,26 +108,26 @@ const StickyTable = () => {
       handleDeleteMeaning();
   }
 
-  // const toggleDeleteWord = (id) => {
-  //   setWord(words.map(word => {
-  //       if (word.id === id) {
-  //         return {...word, isCompleted: !word.isCompleted}
-  //       }
-  //       return word
-  //     }))
-  // }
+  const toggleDeleteWord = (id) => {
+    setWord(words.map(word => {
+        if (word.id === id) {
+          return {...word, isCompleted: !word.isCompleted}
+        }
+        return word
+      }))
+  }
 
-  // const toggleDeleteMeaning = (id) => {
-  //   setMeaning(meanings.filter(meaning => {
-  //       if (meaning.id === id) meaning.isCompleted = !meaning.isCompleted
-  //       return meaning
-  //   }))
-  // }
+  const toggleDeleteMeaning = (id) => {
+    setMeaning(meanings.filter(meaning => {
+        if (meaning.id === id) meaning.isCompleted = !meaning.isCompleted
+        return meaning
+    }))
+  }
 
-  // const toggleDelete = (id) => {
-  //   toggleDeleteWord(id);
-  //   // toggleDeleteMeaning();
-  // }
+  const toggleDelete = (id) => {
+    toggleDeleteWord(id);
+    toggleDeleteMeaning();
+  }
 
   return (
     <>
@@ -138,33 +138,30 @@ const StickyTable = () => {
           <button type='button' onClick={onClickAdd}>
             登録する
           </button>
-          {/* <button onClick={onClickDelete}>
+          <button onClick={onClickDelete}>
             削除
-          </button> */}
+          </button>
         </form>
         <div className={classes.container}>
           <List component='ol' className={classes.list}>
-            {words.map((word, id) => (
+            {words.map((word,  id) => (
               <ListItem key={id} component='li' className={classes.item}>
-                {/* <Checkbox
+                <Checkbox
                   color="primary"
                   inputProps={{ 'aria-label': 'secondary checkbox' }}
                   onClick={toggleDelete}
                   defaultChecked={word.isCompleted}
-                /> */}
-                <button onClick={() => onClickDelete()}>
-                  削除
-                </button>
+                />
                 {word.item}
               </ListItem>
             ))}
           </List>
           <List component='ol' className={classes.list}>
-              {meanings.map((meaning, id) => (
-                <ListItem key={id} component='li' className={classes.item}>
-                  {meaning.content}
-                </ListItem>
-              ))}
+            {meanings.map((meaning, id) => (
+              <ListItem key={id} component='li' className={classes.item}>
+                {meaning.content}
+              </ListItem>
+            ))}
           </List>
            {/* <div>
           //   {items.length} items
