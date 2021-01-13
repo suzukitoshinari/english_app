@@ -87,6 +87,13 @@ const StickyTable = () => {
       }));
   }
 
+  const speak = (setNewWord) => {
+    let options = new SpeechSynthesisUtterance(setNewWord);
+    options.lang = 'en-US';
+    speechSynthesis.speak(options);
+    console.log('options')
+  };
+
   return (
     <>
       <div className={classes.main}>
@@ -111,6 +118,9 @@ const StickyTable = () => {
                   value={item.isCompleted}
                 />
                 {item.word}
+                <button type='button' onClick={() => speak(item.word)}>
+                  発音を確認
+                </button>
               </ListItem>
             ))}
           </List>
@@ -131,6 +141,7 @@ const StickyTable = () => {
 }
 
 export default StickyTable;
+
 
 
 
