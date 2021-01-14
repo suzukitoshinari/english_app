@@ -1,6 +1,9 @@
 import React, { useState }　from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { TextField, List, ListItem, Checkbox } from '@material-ui/core';
+import AudiotrackIcon from '@material-ui/icons/Audiotrack';
+import AddBox from '@material-ui/icons/Add';
+import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import { v4 as uuidv4 } from 'uuid';
 
 const useStyles = makeStyles({
@@ -101,10 +104,10 @@ const StickyTable = () => {
           <TextField label='単語' value={newWord} onChange={handleNewWord}/>
           <TextField label='意味' value={newMeaning} onChange={handleNewMeaning}/>
           <button type='button' onClick={onClickAdd}>
-            登録する
+            <AddBox />
           </button>
           <button type='button' onClick={onClickDelete}>
-            削除
+            <DeleteForeverIcon />
           </button>
         </form>
         <div className={classes.container}>
@@ -119,7 +122,7 @@ const StickyTable = () => {
                 />
                 {item.word}
                 <button type='button' onClick={() => speak(item.word)}>
-                  発音を確認
+                  <AudiotrackIcon fontSize='small'/>
                 </button>
               </ListItem>
             ))}
