@@ -1,10 +1,12 @@
-import React, { useState }　from 'react';
+import React, { useState, useEffect }　from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { TextField, List, ListItem, Checkbox } from '@material-ui/core';
 import AudiotrackIcon from '@material-ui/icons/Audiotrack';
 import AddBox from '@material-ui/icons/Add';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import { v4 as uuidv4 } from 'uuid';
+import firebase from 'firebase/app';
+import 'firebase/firestore';
 
 const useStyles = makeStyles({
   root: {
@@ -32,7 +34,7 @@ const useStyles = makeStyles({
         width: '80%',
         padding: 0,
         backgroundColor: 'white',
-        border: '1px solid black',
+        border: '1px solid black'
       },
       container: {
         display: 'flex',
@@ -40,7 +42,14 @@ const useStyles = makeStyles({
       item: {
         borderBottom: '1px solid black',
         height: 40
-      }
+      },
+      // check: {
+      //   marginRight: 20
+      // },
+      // btn: {
+      //   position: 'absolute',
+      //   position: 'right'
+      // }
 });
 
 const StickyTable = () => {
@@ -49,6 +58,16 @@ const StickyTable = () => {
   const [items, setItems] = useState([]),
         [newWord, setNewWord] = useState(''),
         [newMeaning, setNewMeaning] = useState('');
+
+  const db = firebase.firestore();
+
+  useEffect(() => {
+    (async () => {
+      const resTodo = await db.collection("e-todo").doc("EU50n5C4YX1Uofutb6Vp").get();
+      setItems(resTodo.data().items);
+      // const resFinishedTodo = await db.collection("e-todo").doc("w3werKruvoimxVN64d3P").get();
+    })()
+  }, [db])
 
   const handleNewWord = (e) => {
     setNewWord(e.target.value);
@@ -109,12 +128,17 @@ const StickyTable = () => {
           <button type='button' onClick={onClickDelete}>
             <DeleteForeverIcon />
           </button>
+          <div>
+             {items.length} items
+          </div>
         </form>
         <div className={classes.container}>
-          <List component='ol' className={classes.list}>
+          <List component='ul' className={classes.list} >
             {items.map((item) => (
               <ListItem key={item.id} component='li' className={classes.item}>
+                {items.length}
                 <Checkbox
+                  // className={classes.check}
                   color="primary"
                   inputProps={{ 'aria-label': 'secondary checkbox' }}
                   onClick={e => toggleCompleted(item.id)}
@@ -127,16 +151,13 @@ const StickyTable = () => {
               </ListItem>
             ))}
           </List>
-          <List component='ol' className={classes.list}>
+          <List component='ul' className={classes.list}>
             {items.map((item) => (
               <ListItem key={item.id} component='li' className={classes.item}>
                 {item.meaning}
               </ListItem>
             ))}
           </List>
-           {/* <div>
-          //   {items.length} items
-          // </div> */}
         </div>
       </div>
     </>
