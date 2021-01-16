@@ -5,16 +5,17 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import firebase from 'firebase/app';
 
-var firebaseConfig = {
-  apiKey: "AIzaSyDsCrdfkOeSAUcnfy05BxNBcklFJSlnbqI",
-  authDomain: "e-todo-app.firebaseapp.com",
-  databaseURL: "https://e-todo-app.firebaseio.com",
-  projectId: "e-todo-app",
-  storageBucket: "e-todo-app.appspot.com",
-  messagingSenderId: "520504304260",
-  appId: "1:520504304260:web:f2b449c244d5b32624d8d1",
-  measurementId: "G-K189C3ST6E"
-};
+// var firebaseConfig = {
+//   apiKey: "AIzaSyDsCrdfkOeSAUcnfy05BxNBcklFJSlnbqI",
+//   authDomain: "e-todo-app.firebaseapp.com",
+//   databaseURL: "https://e-todo-app.firebaseio.com",
+//   projectId: "e-todo-app",
+//   storageBucket: "e-todo-app.appspot.com",
+//   messagingSenderId: "520504304260",
+//   appId: "1:520504304260:web:f2b449c244d5b32624d8d1",
+//   measurementId: "G-K189C3ST6E"
+// };
+
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 firebase.analytics();
