@@ -6,7 +6,7 @@ import reportWebVitals from './reportWebVitals';
 import firebase from 'firebase/app';
 
 // var firebaseConfig = {
-//   apiKey: "AIzaSyDsCrdfkOeSAUcnfy05BxNBcklFJSlnbqI",
+
 //   authDomain: "e-todo-app.firebaseapp.com",
 //   databaseURL: "https://e-todo-app.firebaseio.com",
 //   projectId: "e-todo-app",
