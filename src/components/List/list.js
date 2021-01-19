@@ -5,8 +5,7 @@ import AudiotrackIcon from '@material-ui/icons/Audiotrack';
 import AddBox from '@material-ui/icons/Add';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import { v4 as uuidv4 } from 'uuid';
-import firebase from 'firebase/app';
-import 'firebase/firestore';
+import db from './firebase';
 
 const useStyles = makeStyles({
   root: {
@@ -46,9 +45,13 @@ const useStyles = makeStyles({
       // check: {
       //   marginRight: 20
       // },
-      // btn: {
-      //   position: 'absolute',
-      //   position: 'right'
+      // .app__logout {
+      //   cursor: pointer;
+      //   background-color: transparent;
+      //   border: none;
+      //   outline: none;
+      //   color: dimgray;
+      //   margin-left: 10px;
       // }
 });
 
@@ -59,15 +62,22 @@ const StickyTable = () => {
         [newWord, setNewWord] = useState(''),
         [newMeaning, setNewMeaning] = useState('');
 
-  const db = firebase.firestore();
+  // useEffect(() => {
+  //   (async () => {
+  //     const resTodo = await db.collection("e-todo").doc("rrYNojj9IQaczCNVeLSc").get();
+  //     setItems(resTodo.data().items);
+  //     // const resFinishedTodo = await db.collection("e-todo").doc("w3werKruvoimxVN64d3P").get();
+  //   })()
+  // }, [db])
 
-  useEffect(() => {
-    (async () => {
-      const resTodo = await db.collection("e-todo").doc("EU50n5C4YX1Uofutb6Vp").get();
-      setItems(resTodo.data().items);
-      // const resFinishedTodo = await db.collection("e-todo").doc("w3werKruvoimxVN64d3P").get();
-    })()
-  }, [db])
+  useEffect (() => {
+    const unSub = db.collection('e-todo').onSnapshot((snapshot) => {
+      setItems(
+        snapshot.docs.map((doc) => ({id: doc.id, item: doc.data().item}))
+      );
+    });
+    return () => unSub();
+  }, []);
 
   const handleNewWord = (e) => {
     setNewWord(e.target.value);
