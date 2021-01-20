@@ -14,7 +14,7 @@ const useStyles = makeStyles({
   },
   text: {
     textAlign: 'center'
-  },
+  }
 });
 
 function Word() {
