@@ -5,7 +5,7 @@ import AudiotrackIcon from '@material-ui/icons/Audiotrack';
 import AddBox from '@material-ui/icons/Add';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import { v4 as uuidv4 } from 'uuid';
-import db from './firebase';
+import db from 'firebase';
 
 const useStyles = makeStyles({
   root: {

@@ -30,4 +30,5 @@ function Word() {
     </>
   );
 }
+
 export default Word
