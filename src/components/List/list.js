@@ -73,7 +73,7 @@ const StickyTable = () => {
   useEffect (() => {
     const unSub = db.collection('e-todo').onSnapshot((snapshot) => {
       setItems(
-        snapshot.docs.map((doc) => ({id: doc.id, item: doc.data().item}))
+        snapshot.docs.map((doc) => ({id: doc.id, word: doc.data().word, meaning: doc.data().meaning, isCompleted: doc.data().isCompleted}))
       );
     });
     return () => unSub();
@@ -98,17 +98,27 @@ const StickyTable = () => {
     }
   }
 
+  // const handleAddWord = () => {
+  //   setItems([...items, {
+  //     id: uuidv4(), word: newWord, meaning: newMeaning, isCompleted: false
+  //   }]);
+  //   setNewWord('');
+  //   setNewMeaning('');
+  // }
+
   const handleAddWord = () => {
-    setItems([...items, {
-      id: uuidv4(), word: newWord, meaning: newMeaning, isCompleted: false
-    }]);
+    db.collection("e-todo").add({id: uuidv4(), word: newWord, meaning: newMeaning, isCompleted: false });
     setNewWord('');
     setNewMeaning('');
-  }
+  };
+
+  // const onClickDelete = () => {
+  //   setItems(items.filter((item) => !item.isCompleted));
+  // }
 
   const onClickDelete = () => {
-    setItems(items.filter((item) => !item.isCompleted));
-  }
+    db.collection("e-todo").doc(props.id).delete();
+  };
 
   const toggleCompleted = (id) => {
     setItems(items.map(item => {
