@@ -55,7 +55,7 @@ const useStyles = makeStyles({
       // }
 });
 
-const StickyTable = () => {
+const StickyTable = (props) => {
   const classes = useStyles();
 
   const [items, setItems] = useState([]),
@@ -117,12 +117,12 @@ const StickyTable = () => {
   // }
 
   const onClickDelete = () => {
-    db.collection("e-todo").doc(props.id).delete();
+    db.collection("e-todo").doc(doc.id).delete();
   };
 
-  const toggleCompleted = (id) => {
+  const toggleCompleted = () => {
     setItems(items.map(item => {
-        if (item.id === id) {
+        if (item.id === doc.id) {
           return {...item, isCompleted: !item.isCompleted}
         }
         return item
@@ -156,7 +156,7 @@ const StickyTable = () => {
           <List component='ul' className={classes.list} >
             {items.map((item) => (
               <ListItem key={item.id} component='li' className={classes.item}>
-                {items.length}
+               ・ {items.length}
                 <Checkbox
                   // className={classes.check}
                   color="primary"
