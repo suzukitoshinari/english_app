@@ -55,7 +55,7 @@ const useStyles = makeStyles({
       // }
 });
 
-const StickyTable = (props) => {
+const StickyTable = ({  }) => {
   const classes = useStyles();
 
   const [items, setItems] = useState([]),
@@ -106,7 +106,7 @@ const StickyTable = (props) => {
   //   setNewMeaning('');
   // }
 
-  const handleAddWord = () => {
+  const handleAddWord = (id) => {
     db.collection("e-todo").add({id: uuidv4(), word: newWord, meaning: newMeaning, isCompleted: false });
     setNewWord('');
     setNewMeaning('');
@@ -116,18 +116,18 @@ const StickyTable = (props) => {
   //   setItems(items.filter((item) => !item.isCompleted));
   // }
 
-  const onClickDelete = () => {
-    db.collection("e-todo").doc(doc.id).delete();
+  const onClickDelete = (id) => {
+    db.collection("e-todo").doc(id).delete();
   };
 
-  const toggleCompleted = () => {
-    setItems(items.map(item => {
-        if (item.id === doc.id) {
-          return {...item, isCompleted: !item.isCompleted}
-        }
-        return item
-      }));
-  }
+  // const toggleCompleted = () => {
+  //   setItems(items.map(item => {
+  //       if (item.id === id) {
+  //         return {...item, isCompleted: !item.isCompleted}
+  //       }
+  //       return item
+  //     }));
+  // }
 
   const speak = (setNewWord) => {
     let options = new SpeechSynthesisUtterance(setNewWord);
@@ -157,13 +157,16 @@ const StickyTable = (props) => {
             {items.map((item) => (
               <ListItem key={item.id} component='li' className={classes.item}>
                ・ {items.length}
-                <Checkbox
+                {/* <Checkbox
                   // className={classes.check}
                   color="primary"
                   inputProps={{ 'aria-label': 'secondary checkbox' }}
                   onClick={e => toggleCompleted(item.id)}
                   value={item.isCompleted}
-                />
+                /> */}
+                <button onClick={onClickDelete}>
+                  x
+                </button>
                 {item.word}
                 <button type='button' onClick={() => speak(item.word)}>
                   <AudiotrackIcon fontSize='small'/>
