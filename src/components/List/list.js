@@ -42,17 +42,6 @@ const useStyles = makeStyles({
         borderBottom: '1px solid black',
         height: 40
       },
-      // check: {
-      //   marginRight: 20
-      // },
-      // .app__logout {
-      //   cursor: pointer;
-      //   background-color: transparent;
-      //   border: none;
-      //   outline: none;
-      //   color: dimgray;
-      //   margin-left: 10px;
-      // }
 });
 
 const StickyTable = ({  }) => {
@@ -90,23 +79,11 @@ const StickyTable = ({  }) => {
     }
   }
 
-  // const handleAddWord = () => {
-  //   setItems([...items, {
-  //     id: uuidv4(), word: newWord, meaning: newMeaning, isCompleted: false
-  //   }]);
-  //   setNewWord('');
-  //   setNewMeaning('');
-  // }
-
   const handleAddWord = (id) => {
     db.collection("e-todo").add({id: uuidv4(), word: newWord, meaning: newMeaning, isCompleted: false });
     setNewWord('');
     setNewMeaning('');
   };
-
-  // const onClickDelete = () => {
-  //   setItems(items.filter((item) => !item.isCompleted));
-  // }
 
   const onClickDelete = (id) => {
     db.collection("e-todo").doc(item).delete();
