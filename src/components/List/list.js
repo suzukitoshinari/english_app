@@ -44,7 +44,7 @@ const useStyles = makeStyles({
       },
 });
 
-const StickyTable = ({  }) => {
+const StickyTable = () => {
   const classes = useStyles();
 
   const [items, setItems] = useState([]),
@@ -52,9 +52,9 @@ const StickyTable = ({  }) => {
         [newMeaning, setNewMeaning] = useState('');
 
   useEffect (() => {
-    const unSub = db.collection('e-todo').onSnapshot((snapshot) => {
+    const unSub = db.collection('e-todo').onSnapshot((collection) => {
       setItems(
-        snapshot.docs.map((doc) => ({id: doc.id, word: doc.data().word, meaning: doc.data().meaning, isCompleted: doc.data().isCompleted}))
+        collection.docs.map((doc) => ({id: doc.id, word: doc.data().word, meaning: doc.data().meaning, isCompleted: doc.data().isCompleted}))
       );
     });
     return () => unSub();
@@ -79,14 +79,15 @@ const StickyTable = ({  }) => {
     }
   }
 
-  const handleAddWord = (id) => {
-    db.collection("e-todo").add({id: uuidv4(), word: newWord, meaning: newMeaning, isCompleted: false });
+  const handleAddWord = () => {
+    db.collection("e-todo").add({id: uuidv4(), word: newWord, meaning: newMeaning, isCompleted: false});
     setNewWord('');
     setNewMeaning('');
   };
 
-  const onClickDelete = (id) => {
-    db.collection("e-todo").doc(item).delete();
+  const onClickDelete = () => {
+    db.collection("e-todo").doc(id).delete();
+    console.log(id)
   };
 
   const speak = (setNewWord) => {
