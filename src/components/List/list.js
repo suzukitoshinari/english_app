@@ -1,6 +1,6 @@
 import React, { useState, useEffect }　from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { TextField, List, ListItem, Checkbox } from '@material-ui/core';
+import { TextField, List, ListItem, Checkbox, Button } from '@material-ui/core';
 import AudiotrackIcon from '@material-ui/icons/Audiotrack';
 import AddBox from '@material-ui/icons/Add';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
@@ -103,12 +103,12 @@ const StickyTable = () => {
         <form className={classes.paper} autoComplete='off'>      
           <TextField label='単語' value={newWord} onChange={handleNewWord}/>
           <TextField label='意味' value={newMeaning} onChange={handleNewMeaning}/>
-          <button type='button' onClick={onClickAdd}>
+          <Button disabled={!newWord|!newMeaning} type='button' onClick={onClickAdd}>
             <AddBox />
-          </button>
-          <button type='button' onClick={onClickDelete}>
+          </Button>
+          <Button type='button' onClick={onClickDelete}>
             <DeleteForeverIcon />
-          </button>
+          </Button>
           <div>
              {items.length} items
           </div>
@@ -118,13 +118,13 @@ const StickyTable = () => {
             {items.map((item) => (
               <ListItem key={item.id} component='li' className={classes.item}>
                ・
-                <button onClick={onClickDelete}>
+                <Button onClick={onClickDelete}>
                   x
-                </button>
+                </Button>
                 {item.word}
-                <button type='button' onClick={() => speak(item.word)}>
+                <Button type='button' onClick={() => speak(item.word)}>
                   <AudiotrackIcon fontSize='small'/>
-                </button>
+                </Button>
               </ListItem>
             ))}
           </List>
