@@ -6,6 +6,7 @@ import AddBox from '@material-ui/icons/Add';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import { v4 as uuidv4 } from 'uuid';
 import { db } from '../../firebase';
+import firebase from 'firebase';
 
 const useStyles = makeStyles({
   root: {
@@ -52,9 +53,10 @@ const StickyTable = () => {
         [newMeaning, setNewMeaning] = useState('');
 
   useEffect (() => {
-    const unSub = db.collection('e-todo').onSnapshot((collection) => {
+    const unSub = db.collection('todo').orderBy('timestamp', 'desc').onSnapshot((snapshot) => {
       setItems(
-        collection.docs.map((doc) => ({id: doc.id, word: doc.data().word, meaning: doc.data().meaning, isCompleted: doc.data().isCompleted}))
+        snapshot.docs.map((doc) => ({id: doc.id, word: doc.data().word, meaning: doc.data().meaning, isCompleted: doc.data().isCompleted}))
+        // snapshot.docs.map((doc) => ({id: doc.id, item: doc.data().item, isCompleted: doc.data().isCompleted}))
       );
     });
     return () => unSub();
@@ -62,9 +64,11 @@ const StickyTable = () => {
 
   const handleNewWord = (e) => {
     setNewWord(e.target.value);
+    // setItems(e.target.value);
   }
   const handleNewMeaning = (e) => {
     setNewMeaning(e.target.value);
+    // setItems(e.target.value);
   };
 
   const onClickAdd = () => {
@@ -80,14 +84,21 @@ const StickyTable = () => {
   }
 
   const handleAddWord = () => {
-    db.collection("e-todo").add({id: uuidv4(), word: newWord, meaning: newMeaning, isCompleted: false});
-    setNewWord('');
-    setNewMeaning('');
+    db.collection("todo").add({word: newWord, meaning: newMeaning, isCompleted: false, 
+    // db.collection("todo").add({item: item, isCompleted: false, 
+      timestamp: firebase.firestore.FieldValue.serverTimestamp()
+    });
+    // setNewWord('');
+    // setNewMeaning('');
   };
 
   const onClickDelete = () => {
-    db.collection("e-todo").doc(id).delete();
-    console.log(id)
+    db.collection("todo").doc(docid).delete();
+    // db.collection("todo").get().then(function(snapshot){
+    //   snapshot.forEach(function(doc){
+    //     db.collection("todo").doc(doc.id).delete();
+    //   })
+    // })
   };
 
   const speak = (setNewWord) => {
