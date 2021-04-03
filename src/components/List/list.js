@@ -3,7 +3,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import { TextField, List, ListItem, Checkbox, Button } from '@material-ui/core';
 import AudiotrackIcon from '@material-ui/icons/Audiotrack';
 import AddBox from '@material-ui/icons/Add';
-import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import { v4 as uuidv4 } from 'uuid';
 import { db } from '../../firebase';
 import firebase from 'firebase';
@@ -52,8 +51,10 @@ const StickyTable = () => {
         [newWord, setNewWord] = useState(''),
         [newMeaning, setNewMeaning] = useState('');
 
+  const ref = db.collection("todo");
+
   useEffect (() => {
-    const unSub = db.collection('todo').orderBy('timestamp', 'desc').onSnapshot((snapshot) => {
+    const unSub = ref.orderBy('timestamp', 'desc').onSnapshot((snapshot) => {
       setItems(
         snapshot.docs.map((doc) => ({id: doc.id, word: doc.data().word, meaning: doc.data().meaning, isCompleted: doc.data().isCompleted}))
         // snapshot.docs.map((doc) => ({id: doc.id, item: doc.data().item, isCompleted: doc.data().isCompleted}))
@@ -83,17 +84,30 @@ const StickyTable = () => {
     }
   }
 
+  // const handleAddWord = () => {
+  //   db.collection("todo").add({id: uuidv4(), word: newWord, meaning: newMeaning, isCompleted: false, 
+  //     timestamp: firebase.firestore.FieldValue.serverTimestamp()
+  //   });
+  //   setNewWord('');
+  //   setNewMeaning('');
+  // };
+
   const handleAddWord = () => {
-    db.collection("todo").add({word: newWord, meaning: newMeaning, isCompleted: false, 
-    // db.collection("todo").add({item: item, isCompleted: false, 
+    ref.add({word: newWord, meaning: newMeaning, isCompleted: false, 
       timestamp: firebase.firestore.FieldValue.serverTimestamp()
+    })
+    .then((doc) => {
+      console.log(`追加に成功しました (${doc.id})`);
+    })
+    .catch((error) => {
+      console.log(`追加に失敗しました (${error})`);
     });
-    // setNewWord('');
-    // setNewMeaning('');
+    setNewWord('');
+    setNewMeaning('');
   };
 
-  const onClickDelete = () => {
-    db.collection("todo").doc(docid).delete();
+  const onClickDelete = ({id}) => {
+    ref.doc(id).delete();
     // db.collection("todo").get().then(function(snapshot){
     //   snapshot.forEach(function(doc){
     //     db.collection("todo").doc(doc.id).delete();
@@ -101,13 +115,19 @@ const StickyTable = () => {
     // })
   };
 
+  // function toggleInProgress() {
+  //   db.collection("todo").doc(id).update({
+  //     isCompleted: !isCompleted,
+  //   });
+  // }
+
   const speak = (setNewWord) => {
     let options = new SpeechSynthesisUtterance(setNewWord);
     options.lang = 'en-US';
     speechSynthesis.speak(options);
     console.log('options')
   };
-
+ 
   return (
     <>
       <div className={classes.main}>
@@ -117,21 +137,20 @@ const StickyTable = () => {
           <Button disabled={!newWord|!newMeaning} type='button' onClick={onClickAdd}>
             <AddBox />
           </Button>
-          <Button type='button' onClick={onClickDelete}>
-            <DeleteForeverIcon />
-          </Button>
           <div>
-             {items.length} items
+             {items.length} 単語
           </div>
         </form>
         <div className={classes.container}>
           <List component='ul' className={classes.list} >
             {items.map((item) => (
               <ListItem key={item.id} component='li' className={classes.item}>
-               ・
-                <Button onClick={onClickDelete}>
+                <Button onClick={() => onClickDelete(id)}>
                   x
                 </Button>
+                {/* <Button onClick={toggleInProgress}>
+                  {isCompleted ? "Done" : "UnDone"}
+                </Button> */}
                 {item.word}
                 <Button type='button' onClick={() => speak(item.word)}>
                   <AudiotrackIcon fontSize='small'/>
