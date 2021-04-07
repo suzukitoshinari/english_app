@@ -10,7 +10,8 @@ const useStyles = makeStyles({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    height: '85vh'
+    height: '100vh',
+    width: '100vw'
   },
   text: {
     textAlign: 'center'
