@@ -1,8 +1,7 @@
 import React, { useState, useEffect }　from 'react';
 import useMedia from 'use-media';
 import { makeStyles } from '@material-ui/core/styles';
-import { TextField, List, ListItem, Checkbox, Button } from '@material-ui/core';
-import AudiotrackIcon from '@material-ui/icons/Audiotrack';
+import { TextField, List, ListItem } from '@material-ui/core';
 // import { v4 as uuidv4 } from 'uuid';
 import { db } from '../../firebase';
 import firebase from 'firebase';
@@ -27,18 +26,31 @@ const useStyles = makeStyles({
   },
   btnAdd: {
     margin: 35,
-    padding: 5,
-    border: '1px solid black'
+    padding: 12,
+    border: '1px solid black',
+    cursor: 'pointer'
+  },
+  btnContainer: {
+    width: 80,
+    marginRight: 5,
+    borderRight: '1px solid black',
+    display: 'flex'
   },
   btn: {
-    border: '1px solid black'
+    border: '1px solid black',
+    padding: 0,
+    width: 20,
+    height: 20,
+    margin: 10,
+    cursor: 'pointer'
   },
   container: {
     display: 'flex',
   },
   item: {
     borderBottom: '1px solid black',
-    height: 40
+    height: 40,
+    padding: 5
   },
   list: {
     width: '80%',
@@ -46,11 +58,25 @@ const useStyles = makeStyles({
     backgroundColor: 'white',
     border: '1px solid black'
   },
+  words: {
+    background: 'white',
+    border: '1px solid black'
+  },
+  resContainer: {
+    display: 'flex',
+    flexDirection: 'column'
+  },
+  resList: {
+    width: '100%',
+    background: 'white',
+    border: '1px solid black',
+    padding: 0
+  }
 });
 
 const WordList = () => {
   const classes = useStyles();
-  const isWide = useMedia({minWidth: '1181px'});
+  const isWide = useMedia({minWidth: '907px'});
 
   const [items, setItems] = useState([]),
         [newWord, setNewWord] = useState(''),
@@ -110,23 +136,25 @@ const WordList = () => {
           <form className={classes.paper} autoComplete='off'>      
             <TextField className={classes.text} label='単語' value={newWord} onChange={handleNewWord}/>
             <TextField className={classes.text} label='意味' value={newMeaning} onChange={handleNewMeaning}/>
-            <Button className={classes.btnAdd} disabled={!newWord|!newMeaning} type='button' onClick={handleAddWord}>
+            <button className={classes.btnAdd} disabled={!newWord|!newMeaning} type='button' onClick={handleAddWord}>
               追加
-            </Button>
-            <div>
-              登録件数：{items.length} 単語
-            </div>
+            </button>
           </form>
+          <div className={classes.words}>
+            登録件数：{items.length} 単語
+          </div>
           <div className={classes.container}>
             <List component='ul' className={classes.list} >
               {items.map((item) => (
                 <ListItem key={item.id} component='li' className={classes.item}>
-                  <Button className={classes.btn} onClick={() => {onClickDelete(item.id)}}>
-                    x
-                  </Button>
-                  <Button type='button' onClick={() => speak(item.word)}>
-                    <AudiotrackIcon className={classes.btn} fontSize='small'/>
-                  </Button>
+                  <div className={classes.btnContainer}>
+                    <button className={classes.btn} type='button' onClick={() => {onClickDelete(item.id)}}>
+                      x
+                    </button>
+                    <button　className={classes.btn} type='button' onClick={() => speak(item.word)}>
+                      ♫
+                    </button>
+                  </div>
                   {item.word}
                 </ListItem>
               ))}
@@ -145,28 +173,33 @@ const WordList = () => {
           <form className={classes.paper} autoComplete='off'>      
             <TextField className={classes.text} label='単語' value={newWord} onChange={handleNewWord}/>
             <TextField className={classes.text} label='意味' value={newMeaning} onChange={handleNewMeaning}/>
-            <Button className={classes.btnAdd} disabled={!newWord|!newMeaning} type='button' onClick={handleAddWord}>
+            <button className={classes.btnAdd} disabled={!newWord|!newMeaning} type='button' onClick={handleAddWord}>
               追加
-            </Button>
-            <div>
-              登録件数：{items.length} 単語
-            </div>
+            </button>
           </form>
-          <div className={classes.container}>
-            <List component='ul' className={classes.list} >
+          <div className={classes.words}>
+            登録件数：{items.length} 単語
+          </div>
+          <div className={classes.resContainer}>
+            <List component='ul' className={classes.resList} >
               {items.map((item) => (
                 <ListItem key={item.id} component='li' className={classes.item}>
-                  <Button className={classes.btn} onClick={() => {onClickDelete(item.id)}}>
+                  <button className={classes.btn} type='button' onClick={() => {onClickDelete(item.id)}}>
                     x
-                  </Button>
-                  <Button type='button' onClick={() => speak(item.word)}>
-                    <AudiotrackIcon className={classes.btn} fontSize='small'/>
-                  </Button>
+                  </button>
+                  <button className={classes.btn} type='button' onClick={() => speak(item.word)}>
+                    ♫
+                  </button>
                   {item.word}
                 </ListItem>
               ))}
+              {/* {items.map((item) => (
+                <ListItem key={item.id} component='li' className={classes.item}>
+                  {item.meaning}
+                </ListItem>
+              ))} */}
             </List>
-            <List component='ul' className={classes.list}>
+            <List component='ul' className={classes.resList}>
               {items.map((item) => (
                 <ListItem key={item.id} component='li' className={classes.item}>
                   {item.meaning}
