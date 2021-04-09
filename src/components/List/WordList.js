@@ -62,9 +62,14 @@ const useStyles = makeStyles({
     background: 'white',
     border: '1px solid black'
   },
-  resContainer: {
-    display: 'flex',
-    flexDirection: 'column'
+  resItem: {
+    borderBottom: '1px solid black',
+    height: 40,
+    padding: 5
+  },
+  btnItem: {
+    height: 80,
+    width: 120
   },
   resList: {
     width: '100%',
@@ -180,33 +185,26 @@ const WordList = () => {
           <div className={classes.words}>
             登録件数：{items.length} 単語
           </div>
-          <div className={classes.resContainer}>
-            <List component='ul' className={classes.resList} >
-              {items.map((item) => (
-                <ListItem key={item.id} component='li' className={classes.item}>
+          <List component='ul' className={classes.resList} >
+            {items.map((item) => (
+              <>
+                <ListItem key={item.id} component='li' className={classes.btnItem}>
                   <button className={classes.btn} type='button' onClick={() => {onClickDelete(item.id)}}>
                     x
                   </button>
                   <button className={classes.btn} type='button' onClick={() => speak(item.word)}>
                     ♫
                   </button>
+                </ListItem>
+                <ListItem key={item.id} component='li' className={classes.resItem}>
                   {item.word}
                 </ListItem>
-              ))}
-              {/* {items.map((item) => (
-                <ListItem key={item.id} component='li' className={classes.item}>
+                <ListItem key={item.id} component='li' className={classes.resItem}>
                   {item.meaning}
                 </ListItem>
-              ))} */}
-            </List>
-            <List component='ul' className={classes.resList}>
-              {items.map((item) => (
-                <ListItem key={item.id} component='li' className={classes.item}>
-                  {item.meaning}
-                </ListItem>
-              ))}
-            </List>
-          </div>
+              </>
+            ))}
+          </List>
         </div>
       }
     </>
