@@ -14,8 +14,6 @@ const useStyles = makeStyles({
   paper: {
     backgroundColor: 'white',
     border: '2px solid #000',
-    boxShadow: 5,
-    padding: 3,
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center'
@@ -56,32 +54,64 @@ const useStyles = makeStyles({
     width: '80%',
     padding: 0,
     backgroundColor: 'white',
-    border: '1px solid black'
+    border: '2px solid black'
   },
   words: {
     background: 'white',
-    border: '1px solid black'
+    border: '2px solid black'
+  },
+  resPaper: {
+    backgroundColor: 'white',
+    border: '2px solid #000',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 20,
+    height: 150
+  },
+  input: {
+    display: 'flex',
+    flexDirection: 'column'
+  },
+  resBtnAdd: {
+    margin: '90px 20px 0px 45px',
+    // width: 80,
+    padding: 12,
+    border: '1px solid black',
+    cursor: 'pointer'
   },
   resItem: {
-    borderBottom: '1px solid black',
-    height: 40,
-    padding: 5
+    borderBottom: '2px solid black',
+    height: '90',
+    padding: 10
   },
   btnItem: {
     height: 80,
-    width: 120
+    width: 100
   },
   resList: {
     width: '100%',
     background: 'white',
     border: '1px solid black',
-    padding: 0
+    padding: 0,
+    boxSizing: 'border-box'
+  },
+  itemBox: {
+    display: 'flex'
+  },
+  btnBox: {
+    width: 120,
+    border: '2px solid black'
+  },
+  listBox: {
+    width: '100%'
   }
 });
 
 const WordList = () => {
   const classes = useStyles();
-  const isWide = useMedia({minWidth: '907px'});
+  const isWide = useMedia({minWidth: '974px'});
+  const isWidth = useMedia({minWidth: '400px'});
 
   const [items, setItems] = useState([]),
         [newWord, setNewWord] = useState(''),
@@ -173,12 +203,14 @@ const WordList = () => {
             </List>
           </div>
         </div>
-      : 
+      : isWidth ?
         <div className={classes.main}>
-          <form className={classes.paper} autoComplete='off'>      
-            <TextField className={classes.text} label='単語' value={newWord} onChange={handleNewWord}/>
-            <TextField className={classes.text} label='意味' value={newMeaning} onChange={handleNewMeaning}/>
-            <button className={classes.btnAdd} disabled={!newWord|!newMeaning} type='button' onClick={handleAddWord}>
+          <form className={classes.resPaper} autoComplete='off'> 
+            <div className={classes.input}>
+              <TextField className={classes.text} label='単語' value={newWord} onChange={handleNewWord}/>
+              <TextField className={classes.text} label='意味' value={newMeaning} onChange={handleNewMeaning}/>
+            </div>
+            <button className={classes.resBtnAdd} disabled={!newWord|!newMeaning} type='button' onClick={handleAddWord}>
               追加
             </button>
           </form>
@@ -187,22 +219,65 @@ const WordList = () => {
           </div>
           <List component='ul' className={classes.resList} >
             {items.map((item) => (
-              <>
-                <ListItem key={item.id} component='li' className={classes.btnItem}>
-                  <button className={classes.btn} type='button' onClick={() => {onClickDelete(item.id)}}>
-                    x
-                  </button>
-                  <button className={classes.btn} type='button' onClick={() => speak(item.word)}>
-                    ♫
-                  </button>
-                </ListItem>
-                <ListItem key={item.id} component='li' className={classes.resItem}>
-                  {item.word}
-                </ListItem>
-                <ListItem key={item.id} component='li' className={classes.resItem}>
-                  {item.meaning}
-                </ListItem>
-              </>
+              <div className={classes.itemBox}>
+                <div className={classes.btnBox}>
+                  <ListItem key={item.id} component='li' className={classes.btnItem}>
+                    <button className={classes.btn} type='button' onClick={() => {onClickDelete(item.id)}}>
+                      x
+                    </button>
+                    <button className={classes.btn} type='button' onClick={() => speak(item.word)}>
+                      ♫
+                    </button>
+                  </ListItem>
+                </div>
+                <div className={classes.listBox}>
+                  <ListItem key={item.id} component='li' className={classes.resItem}>
+                    {item.word}
+                  </ListItem>
+                  <ListItem key={item.id} component='li' className={classes.resItem}>
+                    {item.meaning}
+                  </ListItem>
+                </div>
+              </div>
+            ))}
+          </List>
+        </div>
+      : 
+        <div className={classes.main}>
+          <form className={classes.resPaper} autoComplete='off'> 
+            <div className={classes.input}>
+              <TextField className={classes.text} label='単語' value={newWord} onChange={handleNewWord}/>
+              <TextField className={classes.text} label='意味' value={newMeaning} onChange={handleNewMeaning}/>
+            </div>
+            <button className={classes.resBtnAdd} disabled={!newWord|!newMeaning} type='button' onClick={handleAddWord}>
+              追加
+            </button>
+          </form>
+          <div className={classes.words}>
+            登録件数：{items.length} 単語
+          </div>
+          <List component='ul' className={classes.resList} >
+            {items.map((item) => (
+              <div className={classes.itemBox}>
+                <div className={classes.btnBox}>
+                  <ListItem key={item.id} component='li' className={classes.btnItem}>
+                    <button className={classes.btn} type='button' onClick={() => {onClickDelete(item.id)}}>
+                      x
+                    </button>
+                    <button className={classes.btn} type='button' onClick={() => speak(item.word)}>
+                      ♫
+                    </button>
+                  </ListItem>
+                </div>
+                <div className={classes.listBox}>
+                  <ListItem key={item.id} component='li' className={classes.resItem}>
+                    {item.word}
+                  </ListItem>
+                  <ListItem key={item.id} component='li' className={classes.resItem}>
+                    {item.meaning}
+                  </ListItem>
+                </div>
+              </div>
             ))}
           </List>
         </div>
