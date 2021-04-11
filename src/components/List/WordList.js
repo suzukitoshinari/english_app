@@ -74,20 +74,21 @@ const useStyles = makeStyles({
     flexDirection: 'column'
   },
   resBtnAdd: {
-    margin: '90px 20px 0px 45px',
-    // width: 80,
+    margin: '90px 0px 0px 0px',
     padding: 12,
+    width: 60,
     border: '1px solid black',
     cursor: 'pointer'
   },
   resItem: {
     borderBottom: '2px solid black',
     height: '90',
-    padding: 10
+    padding: 10,
+    wordBreak: 'break-all'
   },
   btnItem: {
-    height: 80,
-    width: 100
+    height: '100%',
+    width: '100%'
   },
   resList: {
     width: '100%',
@@ -105,13 +106,49 @@ const useStyles = makeStyles({
   },
   listBox: {
     width: '100%'
+  },
+  minResPaper: {
+    backgroundColor: 'white',
+    border: '2px solid #000',
+    textAlign: 'center',
+    padding: 20,
+    height: 140
+  },
+  minResBtnAdd: {
+    margin: '10px 0px 0px 0px',
+    padding: 9,
+    border: '1px solid black',
+    cursor: 'pointer',
+    height: 40,
+    width: '100%'
+  },
+  minText: {
+    width: '100%'
+  },
+  minBtnBox: {
+    width: 40,
+    border: '2px solid black'
+  },
+  minBtnItem: {
+    height: '100%',
+    width: '100%',
+    display: 'flex',
+    flexFlow: 'column',
+    justifyContent: 'space-between'
+  },
+  minBtn: {
+    border: '1px solid black',
+    padding: 0,
+    width: 20,
+    height: 20,
+    cursor: 'pointer'
   }
 });
 
 const WordList = () => {
   const classes = useStyles();
   const isWide = useMedia({minWidth: '974px'});
-  const isWidth = useMedia({minWidth: '400px'});
+  const isWidth = useMedia({minWidth: '542px'});
 
   const [items, setItems] = useState([]),
         [newWord, setNewWord] = useState(''),
@@ -244,12 +281,12 @@ const WordList = () => {
         </div>
       : 
         <div className={classes.main}>
-          <form className={classes.resPaper} autoComplete='off'> 
+          <form className={classes.minResPaper} autoComplete='off'> 
             <div className={classes.input}>
-              <TextField className={classes.text} label='単語' value={newWord} onChange={handleNewWord}/>
-              <TextField className={classes.text} label='意味' value={newMeaning} onChange={handleNewMeaning}/>
+              <TextField className={classes.minText} label='単語' value={newWord} onChange={handleNewWord}/>
+              <TextField className={classes.minText} label='意味' value={newMeaning} onChange={handleNewMeaning}/>
             </div>
-            <button className={classes.resBtnAdd} disabled={!newWord|!newMeaning} type='button' onClick={handleAddWord}>
+            <button className={classes.minResBtnAdd} disabled={!newWord|!newMeaning} type='button' onClick={handleAddWord}>
               追加
             </button>
           </form>
@@ -259,12 +296,12 @@ const WordList = () => {
           <List component='ul' className={classes.resList} >
             {items.map((item) => (
               <div className={classes.itemBox}>
-                <div className={classes.btnBox}>
-                  <ListItem key={item.id} component='li' className={classes.btnItem}>
-                    <button className={classes.btn} type='button' onClick={() => {onClickDelete(item.id)}}>
+                <div className={classes.minBtnBox}>
+                  <ListItem key={item.id} component='li' className={classes.minBtnItem}>
+                    <button className={classes.minBtn} type='button' onClick={() => {onClickDelete(item.id)}}>
                       x
                     </button>
-                    <button className={classes.btn} type='button' onClick={() => speak(item.word)}>
+                    <button className={classes.minBtn} type='button' onClick={() => speak(item.word)}>
                       ♫
                     </button>
                   </ListItem>

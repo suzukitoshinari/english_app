@@ -7,16 +7,19 @@ import { Button } from '@material-ui/core';
 import HomeIcon from '@material-ui/icons/Home';
 
 const useStyles = makeStyles({
+  text: {
+    textAlign: 'center'
+  },
+  btn: {
+    marginLeft: 20
+  },
   root: {
     backgroundColor: '#e0f7fa',
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    height: '100vh',
-    width: '100vw'
-  },
-  text: {
-    textAlign: 'center'
+    height: '100%',
+    width: '100%'
   }
 });
 

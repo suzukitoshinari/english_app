@@ -1,7 +1,8 @@
 import React, { useState, useEffect }　from 'react';
+import useMedia from 'use-media';
 import { makeStyles } from '@material-ui/core/styles';
-import { TextField, List, ListItem, Button } from '@material-ui/core';
-import AudiotrackIcon from '@material-ui/icons/Audiotrack';
+import { TextField, List, ListItem } from '@material-ui/core';
+// import { v4 as uuidv4 } from 'uuid';
 import { db } from '../../firebase';
 import firebase from 'firebase';
 
@@ -13,8 +14,6 @@ const useStyles = makeStyles({
   paper: {
     backgroundColor: 'white',
     border: '2px solid #000',
-    boxShadow: 5,
-    padding: 3,
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center'
@@ -25,29 +24,131 @@ const useStyles = makeStyles({
   },
   btnAdd: {
     margin: 35,
-    padding: 5,
-    border: '1px solid black'
+    padding: 12,
+    border: '1px solid black',
+    cursor: 'pointer'
+  },
+  btnContainer: {
+    width: 80,
+    marginRight: 5,
+    borderRight: '1px solid black',
+    display: 'flex'
   },
   btn: {
-    border: '1px solid black'
+    border: '1px solid black',
+    padding: 0,
+    width: 20,
+    height: 20,
+    margin: 10,
+    cursor: 'pointer'
   },
   container: {
     display: 'flex',
   },
   item: {
     borderBottom: '1px solid black',
-    height: 40
+    height: 40,
+    padding: 5
   },
   list: {
     width: '80%',
     padding: 0,
     backgroundColor: 'white',
-    border: '1px solid black'
+    border: '2px solid black'
   },
+  words: {
+    background: 'white',
+    border: '2px solid black'
+  },
+  resPaper: {
+    backgroundColor: 'white',
+    border: '2px solid #000',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 20,
+    height: 150
+  },
+  input: {
+    display: 'flex',
+    flexDirection: 'column'
+  },
+  resBtnAdd: {
+    margin: '90px 0px 0px 0px',
+    padding: 12,
+    width: 60,
+    border: '1px solid black',
+    cursor: 'pointer'
+  },
+  resItem: {
+    borderBottom: '2px solid black',
+    height: '90',
+    padding: 10,
+    wordBreak: 'break-all'
+  },
+  btnItem: {
+    height: '100%',
+    width: '100%'
+  },
+  resList: {
+    width: '100%',
+    background: 'white',
+    border: '1px solid black',
+    padding: 0,
+    boxSizing: 'border-box'
+  },
+  itemBox: {
+    display: 'flex'
+  },
+  btnBox: {
+    width: 120,
+    border: '2px solid black'
+  },
+  listBox: {
+    width: '100%'
+  },
+  minResPaper: {
+    backgroundColor: 'white',
+    border: '2px solid #000',
+    textAlign: 'center',
+    padding: 20,
+    height: 140
+  },
+  minResBtnAdd: {
+    margin: '10px 0px 0px 0px',
+    padding: 9,
+    border: '1px solid black',
+    cursor: 'pointer',
+    height: 40,
+    width: '100%'
+  },
+  minText: {
+    width: '100%'
+  },
+  minBtnBox: {
+    width: 40,
+    border: '2px solid black'
+  },
+  minBtnItem: {
+    height: '100%',
+    width: '100%',
+    display: 'flex',
+    flexFlow: 'column',
+    justifyContent: 'space-between'
+  },
+  minBtn: {
+    border: '1px solid black',
+    padding: 0,
+    width: 20,
+    height: 20,
+    cursor: 'pointer'
+  }
 });
 
-const PhraseList = () => {
+const WordList = () => {
   const classes = useStyles();
+  const isWide = useMedia({minWidth: '974px'});
+  const isWidth = useMedia({minWidth: '542px'});
 
   const [items, setItems] = useState([]),
         [newPhrase, setNewPhrase] = useState(''),
@@ -69,7 +170,7 @@ const PhraseList = () => {
     setNewMeaning(e.target.value);
   };
 
-  const handleAddPhrase = () => {
+  const handleAddWord = () => {
     db.collection("phrase").add({phrase: newPhrase, meaning: newMeaning, isCompleted: false, 
       timestamp: firebase.firestore.FieldValue.serverTimestamp()
     })
@@ -87,6 +188,12 @@ const PhraseList = () => {
     db.collection("phrase").doc(id).delete();
   };
 
+  // function toggleInProgress() {
+  //   db.collection("phrase").doc(id).update({
+  //     isCompleted: !isCompleted,
+  //   });
+  // }
+
   const speak = (setNewPhrase) => {
     let options = new SpeechSynthesisUtterance(setNewPhrase);
     options.lang = 'en-US';
@@ -96,45 +203,127 @@ const PhraseList = () => {
  
   return (
     <>
-      <div className={classes.main}>
-        <form className={classes.paper} autoComplete='off'>      
-          <TextField className={classes.text} label='フレーズ' value={newPhrase} onChange={handleNewPhrase}/>
-          <TextField className={classes.text} label='意味' value={newMeaning} onChange={handleNewMeaning}/>
-          <Button className={classes.btnAdd} disabled={!newPhrase|!newMeaning} type='button' onClick={handleAddPhrase}>
-            追加
-          </Button>
-          <div>
-             登録件数：{items.length} フレーズ
+      {isWide ? 
+        <div className={classes.main}>
+          <form className={classes.paper} autoComplete='off'>      
+            <TextField className={classes.text} label='フレーズ' value={newPhrase} onChange={handleNewPhrase}/>
+            <TextField className={classes.text} label='意味' value={newMeaning} onChange={handleNewMeaning}/>
+            <button className={classes.btnAdd} disabled={!newPhrase|!newMeaning} type='button' onClick={handleAddWord}>
+              追加
+            </button>
+          </form>
+          <div className={classes.words}>
+            登録件数：{items.length} フレーズ
           </div>
-        </form>
-        <div className={classes.container}>
-          <List component='ul' className={classes.list} >
+          <div className={classes.container}>
+            <List component='ul' className={classes.list} >
+              {items.map((item) => (
+                <ListItem key={item.id} component='li' className={classes.item}>
+                  <div className={classes.btnContainer}>
+                    <button className={classes.btn} type='button' onClick={() => {onClickDelete(item.id)}}>
+                      x
+                    </button>
+                    <button　className={classes.btn} type='button' onClick={() => speak(item.phrase)}>
+                      ♫
+                    </button>
+                  </div>
+                  {item.phrase}
+                </ListItem>
+              ))}
+            </List>
+            <List component='ul' className={classes.list}>
+              {items.map((item) => (
+                <ListItem key={item.id} component='li' className={classes.item}>
+                  {item.meaning}
+                </ListItem>
+              ))}
+            </List>
+          </div>
+        </div>
+      : isWidth ?
+        <div className={classes.main}>
+          <form className={classes.resPaper} autoComplete='off'> 
+            <div className={classes.input}>
+              <TextField className={classes.text} label='フレーズ' value={newPhrase} onChange={handleNewPhrase}/>
+              <TextField className={classes.text} label='意味' value={newMeaning} onChange={handleNewMeaning}/>
+            </div>
+            <button className={classes.resBtnAdd} disabled={!newPhrase|!newMeaning} type='button' onClick={handleAddWord}>
+              追加
+            </button>
+          </form>
+          <div className={classes.words}>
+            登録件数：{items.length} フレーズ
+          </div>
+          <List component='ul' className={classes.resList} >
             {items.map((item) => (
-              <ListItem key={item.id} component='li' className={classes.item}>
-                <Button className={classes.btn} onClick={() => {onClickDelete(item.id)}}>
-                  x
-                </Button>
-                <Button type='button' onClick={() => speak(item.phrase)}>
-                  <AudiotrackIcon className={classes.btn} fontSize='small'/>
-                </Button>
-                {item.phrase}
-              </ListItem>
-            ))}
-          </List>
-          <List component='ul' className={classes.list}>
-            {items.map((item) => (
-              <ListItem key={item.id} component='li' className={classes.item}>
-                {item.meaning}
-              </ListItem>
+              <div className={classes.itemBox}>
+                <div className={classes.btnBox}>
+                  <ListItem key={item.id} component='li' className={classes.btnItem}>
+                    <button className={classes.btn} type='button' onClick={() => {onClickDelete(item.id)}}>
+                      x
+                    </button>
+                    <button className={classes.btn} type='button' onClick={() => speak(item.phrase)}>
+                      ♫
+                    </button>
+                  </ListItem>
+                </div>
+                <div className={classes.listBox}>
+                  <ListItem key={item.id} component='li' className={classes.resItem}>
+                    {item.phrase}
+                  </ListItem>
+                  <ListItem key={item.id} component='li' className={classes.resItem}>
+                    {item.meaning}
+                  </ListItem>
+                </div>
+              </div>
             ))}
           </List>
         </div>
-      </div>
+      : 
+        <div className={classes.main}>
+          <form className={classes.minResPaper} autoComplete='off'> 
+            <div className={classes.input}>
+              <TextField className={classes.minText} label='フレーズ' value={newPhrase} onChange={handleNewPhrase}/>
+              <TextField className={classes.minText} label='意味' value={newMeaning} onChange={handleNewMeaning}/>
+            </div>
+            <button className={classes.minResBtnAdd} disabled={!newPhrase|!newMeaning} type='button' onClick={handleAddWord}>
+              追加
+            </button>
+          </form>
+          <div className={classes.words}>
+            登録件数：{items.length} フレーズ
+          </div>
+          <List component='ul' className={classes.resList} >
+            {items.map((item) => (
+              <div className={classes.itemBox}>
+                <div className={classes.minBtnBox}>
+                  <ListItem key={item.id} component='li' className={classes.minBtnItem}>
+                    <button className={classes.minBtn} type='button' onClick={() => {onClickDelete(item.id)}}>
+                      x
+                    </button>
+                    <button className={classes.minBtn} type='button' onClick={() => speak(item.phrase)}>
+                      ♫
+                    </button>
+                  </ListItem>
+                </div>
+                <div className={classes.listBox}>
+                  <ListItem key={item.id} component='li' className={classes.resItem}>
+                    {item.phrase}
+                  </ListItem>
+                  <ListItem key={item.id} component='li' className={classes.resItem}>
+                    {item.meaning}
+                  </ListItem>
+                </div>
+              </div>
+            ))}
+          </List>
+        </div>
+      }
     </>
   );
 }
 
-export default PhraseList;
+export default WordList;
 
 
 
