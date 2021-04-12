@@ -218,7 +218,7 @@ const WordList = () => {
           <div className={classes.container}>
             <List component='ul' className={classes.list} >
               {items.map((item) => (
-                <ListItem key={item.id} component='li' className={classes.item}>
+                <ListItem key={item.toString()} component='li' className={classes.item}>
                   <div className={classes.btnContainer}>
                     <button className={classes.btn} type='button' onClick={() => {onClickDelete(item.id)}}>
                       x
@@ -233,7 +233,7 @@ const WordList = () => {
             </List>
             <List component='ul' className={classes.list}>
               {items.map((item) => (
-                <ListItem key={item.id} component='li' className={classes.item}>
+                <ListItem key={item.toString()} component='li' className={classes.item}>
                   {item.meaning}
                 </ListItem>
               ))}
@@ -258,7 +258,7 @@ const WordList = () => {
             {items.map((item) => (
               <div className={classes.itemBox}>
                 <div className={classes.btnBox}>
-                  <ListItem key={item.id} component='li' className={classes.btnItem}>
+                  <ListItem key={item.toString()} component='li' className={classes.btnItem}>
                     <button className={classes.btn} type='button' onClick={() => {onClickDelete(item.id)}}>
                       x
                     </button>
@@ -268,10 +268,10 @@ const WordList = () => {
                   </ListItem>
                 </div>
                 <div className={classes.listBox}>
-                  <ListItem key={item.id} component='li' className={classes.resItem}>
+                  <ListItem key={item.toString()} component='li' className={classes.resItem}>
                     {item.phrase}
                   </ListItem>
-                  <ListItem key={item.id} component='li' className={classes.resItem}>
+                  <ListItem key={item.toString()} component='li' className={classes.resItem}>
                     {item.meaning}
                   </ListItem>
                 </div>
@@ -297,7 +297,7 @@ const WordList = () => {
             {items.map((item) => (
               <div className={classes.itemBox}>
                 <div className={classes.minBtnBox}>
-                  <ListItem key={item.id} component='li' className={classes.minBtnItem}>
+                  <ListItem key={item.toString()} component='li' className={classes.minBtnItem}>
                     <button className={classes.minBtn} type='button' onClick={() => {onClickDelete(item.id)}}>
                       x
                     </button>
@@ -307,10 +307,10 @@ const WordList = () => {
                   </ListItem>
                 </div>
                 <div className={classes.listBox}>
-                  <ListItem key={item.id} component='li' className={classes.resItem}>
+                  <ListItem key={item.toString()} component='li' className={classes.resItem}>
                     {item.phrase}
                   </ListItem>
-                  <ListItem key={item.id} component='li' className={classes.resItem}>
+                  <ListItem key={item.toString()} component='li' className={classes.resItem}>
                     {item.meaning}
                   </ListItem>
                 </div>

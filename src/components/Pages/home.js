@@ -33,7 +33,7 @@ const useStyles = makeStyles({
   btn: {
     height: '80%',
     width: '65%',
-    fontSize: 40,
+    fontSize: 30,
     backgroundColor: 'pink'
   }
 });
