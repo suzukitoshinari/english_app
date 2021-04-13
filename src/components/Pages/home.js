@@ -40,6 +40,7 @@ const useStyles = makeStyles({
 
 function Home() {
   const classes = useStyles();
+  
   return (
     <>
       <Typography className={classes.text} variant='h1' component='h2'>

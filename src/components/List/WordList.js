@@ -2,7 +2,6 @@ import React, { useState, useEffect }　from 'react';
 import useMedia from 'use-media';
 import { makeStyles } from '@material-ui/core/styles';
 import { TextField, List, ListItem } from '@material-ui/core';
-// import { v4 as uuidv4 } from 'uuid';
 import { db } from '../../firebase';
 import firebase from 'firebase';
 
@@ -187,12 +186,6 @@ const WordList = () => {
   const onClickDelete = (id) => {
     db.collection("word").doc(id).delete();
   };
-
-  // function toggleInProgress() {
-  //   db.collection("word").doc(id).update({
-  //     isCompleted: !isCompleted,
-  //   });
-  // }
 
   const speak = (setNewWord) => {
     let options = new SpeechSynthesisUtterance(setNewWord);

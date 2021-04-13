@@ -40,4 +40,4 @@ function Word() {
     </>
   );
 }
-export default Word
+export default Word;

@@ -17,11 +17,12 @@ const useStyles = makeStyles({
   },
   text: {
     textAlign: 'center'
-  },
+  }
 });
 
 function Phrase() {
   const classes = useStyles();
+
   return (
     <>
       <Typography className={classes.text} variant='h1' component='h2'>
