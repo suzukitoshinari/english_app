@@ -170,7 +170,10 @@ const WordList = () => {
   };
 
   const handleAddWord = () => {
-    db.collection("word").add({word: newWord, meaning: newMeaning, isCompleted: false, 
+    db.collection("word").add({
+      word: newWord,
+      meaning: newMeaning,
+      isCompleted: false, 
       timestamp: firebase.firestore.FieldValue.serverTimestamp()
     })
     .then((doc) => {
@@ -179,6 +182,16 @@ const WordList = () => {
     .catch((error) => {
       console.log(`追加に失敗しました (${error})`);
     });
+
+    for (let i = 0; i < items.length; i++) {
+      if (items[i].word === newWord) {
+          alert('単語が重複しています');
+          setNewWord('');
+          setNewMeaning('');
+          return 0;
+        }
+    }
+
     setNewWord('');
     setNewMeaning('');
   };
