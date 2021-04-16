@@ -185,11 +185,11 @@ const WordList = () => {
 
     for (let i = 0; i < items.length; i++) {
       if (items[i].word === newWord) {
-          alert('単語が重複しています');
-          setNewWord('');
-          setNewMeaning('');
-          return 0;
-        }
+        alert('単語が重複しています');
+        setNewWord('');
+        setNewMeaning('');
+        return 0;
+      }
     }
 
     setNewWord('');
