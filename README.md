@@ -28,7 +28,7 @@ https://e-todo-app.web.app/
  
 　・useEffect
 
-・@material-ui
+・Material-ui
 
 ・Firebase
 
