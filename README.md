@@ -8,7 +8,7 @@ SPA（シングルアプリケーション）化。
 
 ## URL
 
-<e-todo-app.web.app>
+(e-todo-app.web.app)
 
 ### 機能
 
@@ -30,7 +30,7 @@ SPA（シングルアプリケーション）化。
 
 ・@material-ui
 
-・firebase
+・Firebase
 
 　・Hosting
  
