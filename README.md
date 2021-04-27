@@ -8,7 +8,7 @@ SPA（シングルアプリケーション）化。
 
 ## URL
 
-(e-todo-app.web.app)
+(https://e-todo-app.web.app/)
 
 ### 機能
 
