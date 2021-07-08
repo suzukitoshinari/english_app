@@ -4,7 +4,7 @@
 
 使用技術はReactとFirebaseを使用。
 
-SPA（シングルアプリケーション）化。
+SPA化。
 
 ## URL
 
