@@ -206,7 +206,7 @@ const WordList = () => {
             </button>
           </form>
           <div className={classes.words}>
-            登録件数：{items.length} フレーズ
+            登録件数：{items.length} 例文
           </div>
           <div className={classes.container}>
             <List component='ul' className={classes.list} >
@@ -245,7 +245,7 @@ const WordList = () => {
             </button>
           </form>
           <div className={classes.words}>
-            登録件数：{items.length} フレーズ
+            登録件数：{items.length} 例文
           </div>
           <List component='ul' className={classes.resList} >
             {items.map((item) => (
@@ -284,7 +284,7 @@ const WordList = () => {
             </button>
           </form>
           <div className={classes.words}>
-            登録件数：{items.length} フレーズ
+            登録件数：{items.length} 例文
           </div>
           <List component='ul' className={classes.resList} >
             {items.map((item) => (

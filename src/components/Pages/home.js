@@ -55,7 +55,7 @@ function Home() {
           </Grid>             
           <Grid item xs={12} className={classes.btnContainer}>
             <Button href='/phrase' className={classes.btn} variant='contained' disableElevation>
-              フレーズ
+              例文
             </Button>
           </Grid>            
         </Grid>

@@ -26,7 +26,7 @@ function Phrase() {
   return (
     <>
       <Typography className={classes.text} variant='h1' component='h2'>
-        フレーズ帳
+          例文帳
         <Button href='/' className={classes.btn} variant='contained' disableElevation>
           <HomeIcon />
         </Button>
